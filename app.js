@@ -1,22 +1,23 @@
 const http = require("http");
 const fs=require("fs");
-/*
-function init(){
-    function onRequest(request, response){
-      response.writeHead(200,{"Content-Type":"text/html"});
-      response.write("<h1>Hola Mundo</h1>");
-      response.end();
-    }
-    http.createServer(onRequest).listen(1111);
 
-}
-*/
 exports.init=()=>{
-  const html=fs.readFileSync("./index.html");
-    http.createServer((request,response)=>{
-      response.writeHead(200,{"Content-Type":"text/html"});
-      response.write(html);
-      response.end();
-    })listen(1111);
 
+    http.createServer((request,response)=>{
+      fs.readFile("./index.html",(err,obj)=>{
+        if(err){
+          response.writeHead(404,{"Content-type":"application/json"});
+          response.write(err);
+
+          }
+          else{
+        response.writeHead(200,{"Content-type":"text/html"});
+        response.write(obj);
+        response.end();
+          }
+      });
+
+    }).listen(4000);
+
+console.log('hola mundi escribe CONTROL+C');
 };
